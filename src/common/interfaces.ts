@@ -17,3 +17,16 @@ export interface Photos {
 export interface Photo {
   img_src: string;
 }
+
+export interface Photo_Manifest {
+  photo_manifest: RoverInfo;
+}
+
+export interface RoverInfo {
+  name: string;
+  landing_date: string;
+  launch_date: string;
+  status: string;
+  max_date: string;
+  total_photos: number;
+}

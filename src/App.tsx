@@ -1,51 +1,23 @@
 import "./App.css";
 
 import { Affix, Layout } from "antd";
-import React, { useEffect, useReducer, useState } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import { Photo, State } from "./common/interfaces";
-import { AppHeader, Filter, ImageDisplay } from "./components";
-import { fetchImages } from "./utils/api/fetchImages";
-import { filterReducer } from "./utils/reducers/filterReducer";
-
-const initialState: State = {
-  date: "2021-03-06",
-  rover: "Curiosity",
-  camera: "all",
-};
+import { AppHeader, Home, Rovers } from "./components";
 
 function App() {
-  const [state, dispatch] = useReducer(filterReducer, initialState);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [photos, setPhotos] = useState<Photo[]>([]);
-
-  useEffect(() => {
-    const getPhotos = async () => {
-      const { date, rover, camera } = state;
-      if (date && rover && camera) {
-        try {
-          setLoading(true);
-          const { photos } = await fetchImages(state);
-          setPhotos(photos);
-        } catch (e) {
-          throw new Error(`Something went wrong: ${e}`);
-          // Todo: add ErrorBoundary to give user feedback and prompt them to try again
-        } finally {
-          setLoading(false);
-        }
-      }
-    };
-    getPhotos();
-  }, [state]);
-
   return (
-    <Layout id="app">
-      <Affix offsetTop={0}>
-        <AppHeader />
-      </Affix>
-      <Filter dispatch={dispatch} />
-      <ImageDisplay loading={loading} photos={photos} />
-    </Layout>
+    <Router>
+      <Layout id="app">
+        <Affix offsetTop={0}>
+          <AppHeader />
+        </Affix>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/rovers" component={Rovers} />
+        </Switch>
+      </Layout>
+    </Router>
   );
 }
 

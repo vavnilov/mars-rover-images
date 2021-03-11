@@ -9,10 +9,10 @@ interface Props {
 export const Filter = ({ dispatch }: Props) => {
   return (
     <div className="filter">
-      <div className="filter__helper-text">
+      <h1>
         Please use the below filters to view the corresponding images from the
         Mars Rovers.
-      </div>
+      </h1>
       <div className="filter-items">
         <DatePicker dispatch={dispatch} />
         <RoverSelector dispatch={dispatch} />
